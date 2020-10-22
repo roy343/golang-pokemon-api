@@ -13,6 +13,10 @@ func getAllPokemons(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(database.PokemonDb)
 }
 
+//func addPokemon(w http.ResponseWriter,r *http.Request) {
+//	var newPokemon database.Pokemon
+//}
+
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.Use(commonMiddleware)
