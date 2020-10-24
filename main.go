@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"os"
 	"pokemon-api/database"
 )
 
@@ -18,10 +19,14 @@ func getAllPokemons(w http.ResponseWriter, r *http.Request) {
 //}
 
 func handleRequests() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "80"
+	}
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.Use(commonMiddleware)
 	myRouter.HandleFunc("/pokemons", getAllPokemons).Methods("GET")
-	log.Fatal(http.ListenAndServe(":10000", myRouter))
+	log.Fatal(http.ListenAndServe(":"+port, myRouter))
 }
 
 func commonMiddleware(next http.Handler) http.Handler {
